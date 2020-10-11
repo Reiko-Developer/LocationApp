@@ -18,21 +18,19 @@ class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
   Future<void> _takePicture() async {
-    ImagePicker picker = ImagePicker();
-    //i Could use ImageSource.gallery instead
-    final imageFile =
-        await picker.getImage(source: ImageSource.camera, maxWidth: 600);
-
-    //in the case the user just get back and do not take the picture;
-    if (imageFile == null) return;
-
+    final imageFile = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
-      _storedImage = File(imageFile.path);
+      _storedImage = imageFile;
     });
-
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
-    final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
+    final savedImage = await imageFile.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
   }
 
@@ -53,13 +51,14 @@ class _ImageInputState extends State<ImageInput> {
                   width: double.infinity,
                 )
               : Text(
-                  'No image taken',
+                  'No Image Taken',
                   textAlign: TextAlign.center,
                 ),
           alignment: Alignment.center,
         ),
-        SizedBox(width: 10),
-        //Expanded takes all the remaining space
+        SizedBox(
+          width: 10,
+        ),
         Expanded(
           child: FlatButton.icon(
             icon: Icon(Icons.camera),

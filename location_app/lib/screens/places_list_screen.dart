@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './add_place_screen.dart';
-
 import '../providers/great_places.dart';
 
 class PlacesListScreen extends StatelessWidget {
@@ -17,7 +16,7 @@ class PlacesListScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
             },
-          )
+          ),
         ],
       ),
       body: FutureBuilder(
@@ -25,10 +24,12 @@ class PlacesListScreen extends StatelessWidget {
             .fetchAndSetPlaces(),
         builder: (ctx, snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
             : Consumer<GreatPlaces>(
                 child: Center(
-                  child: Text('Got no places yet, start adding some.'),
+                  child: const Text('Got no places yet, start adding some!'),
                 ),
                 builder: (ctx, greatPlaces, ch) => greatPlaces.items.length <= 0
                     ? ch
@@ -36,12 +37,13 @@ class PlacesListScreen extends StatelessWidget {
                         itemCount: greatPlaces.items.length,
                         itemBuilder: (ctx, i) => ListTile(
                           leading: CircleAvatar(
-                            backgroundImage:
-                                FileImage(greatPlaces.items[i].image),
+                            backgroundImage: FileImage(
+                              greatPlaces.items[i].image,
+                            ),
                           ),
                           title: Text(greatPlaces.items[i].title),
                           onTap: () {
-                            //TODO: go to the detail page.
+                            // Go to detail page ...
                           },
                         ),
                       ),
