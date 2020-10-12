@@ -6,11 +6,14 @@ import '../models/place.dart';
 class MapScreen extends StatefulWidget {
   final PlaceLocation initialLocation;
   final bool isSelecting;
+  final bool withInitialMarker;
 
-  MapScreen(
-      {this.initialLocation =
-          const PlaceLocation(latitude: 37.422, longitude: -122.084),
-      this.isSelecting = false});
+  MapScreen({
+    this.initialLocation =
+        const PlaceLocation(latitude: 37.422, longitude: -122.084),
+    this.isSelecting = false,
+    this.withInitialMarker = false,
+  });
 
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -27,6 +30,13 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //No caso de PlaceDetailScreen chamar a classe MapScreen
+    //No qual já deverá ter um marcador pré-estabelecido no mapa.
+    if (widget.withInitialMarker) {
+      _selectLocation(LatLng(
+          widget.initialLocation.latitude, widget.initialLocation.longitude));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Your map'),

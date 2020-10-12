@@ -4,3 +4,5 @@ location_app/android/app/src/main/AndroidManifest.xml
 location_app/ios/Runner/AppDelegate.swift
 location_app/ios/Runner/AppDelegate.swift
 location_app/lib/helpers/location_helper.dart
+location_app/android/app/src/main/AndroidManifest.xml
+location_app/ios/Runner/AppDelegate.swift
